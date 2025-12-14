@@ -1,0 +1,55 @@
+<div *ngIf="project" class="project-detail-container">
+  <!-- Image du projet -->
+  <div class="project-image">
+    <img [src]="project.image" [alt]="project.title" />
+    <div class="type-badge">{{ project.type | titlecase }}</div>
+  </div>
+
+  <!-- Informations principales -->
+  <div class="project-header">
+    <h1>{{ project.title }}</h1>
+    <p class="location">{{ project.location }}</p>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="stats-card">
+    <div class="stat-item">
+      <div class="stat-value">{{ project.progress }}%</div>
+      <div class="stat-label">financé</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">{{ project.raised | number }} MAD</div>
+      <div class="stat-label">/ {{ project.target | number }} MAD</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">{{ project.investors }}</div>
+      <div class="stat-label">Investisseurs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">{{ project.daysLeft }}</div>
+      <div class="stat-label">Jours restants</div>
+    </div>
+  </div>
+
+  <!-- Barre de progression -->
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]="project.progress"></div>
+  </div>
+
+  <!-- Description -->
+  <div class="description-section">
+    <h2>Description du projet</h2>
+    <p>{{ project.description }}</p>
+    <p><strong>Retour sur investissement estimé :</strong> {{ project.roi }} sur {{ project.duration }} ans.</p>
+  </div>
+
+  <!-- Bouton Investir -->
+  <button class="btn-invest" (click)="investNow()">
+    Investir maintenant
+  </button>
+</div>
+
+<!-- Facultatif : message de chargement -->
+<div *ngIf="!project" class="loading">
+  Chargement du projet...
+</div>

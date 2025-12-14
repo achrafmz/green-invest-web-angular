@@ -1,0 +1,168 @@
+.pending-projects-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.header p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-header h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.type-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.type-badge:nth-child(1) { background: #fff3e0; color: #f57f17; } /* Éolien */
+.type-badge:nth-child(2) { background: #e8f5e9; color: #2e7d32; } /* Solaire */
+.type-badge:nth-child(3) { background: #f3e5f5; color: #7b1fa2; } /* Géothermie */
+
+.author {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0 0 15px 0;
+}
+
+.project-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-item label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-item span {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-validate,
+.btn-reject {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-validate {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-validate:hover {
+  background: #45a049;
+}
+
+.btn-reject {
+  background: white;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+}
+
+.btn-reject:hover {
+  background: #fdecea;
+  color: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pending-projects-container {
+    margin: 20px 15px;
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .project-details {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}

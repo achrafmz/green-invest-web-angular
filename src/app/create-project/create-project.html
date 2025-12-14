@@ -1,0 +1,110 @@
+<div class="create-project-container">
+  <h1>Créer un projet</h1>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
+
+    <!-- Titre du projet -->
+    <div class="form-group">
+      <label for="title">Titre du projet</label>
+      <input 
+        type="text" 
+        id="title" 
+        formControlName="title"
+        placeholder="Ex: Parc éolien communautaire"
+        required>
+      <div *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched" class="error">
+        Veuillez entrer un titre.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea 
+        id="description" 
+        formControlName="description"
+        placeholder="Décrivez votre projet..."
+        rows="4"
+        required></textarea>
+      <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="error">
+        La description est requise.
+      </div>
+    </div>
+
+    <!-- Budget nécessaire -->
+    <div class="form-group">
+      <label for="budget">Budget nécessaire (MAD)</label>
+      <div class="input-with-icon">
+        <span class="icon">$</span>
+        <input 
+          type="number" 
+          id="budget" 
+          formControlName="budget"
+          placeholder="100000"
+          min="1"
+          required>
+      </div>
+      <div *ngIf="projectForm.get('budget')?.invalid && projectForm.get('budget')?.touched" class="error">
+        Veuillez entrer un budget valide.
+      </div>
+    </div>
+
+    <!-- Localisation -->
+    <div class="form-group">
+      <label for="location">Localisation</label>
+      <input 
+        type="text" 
+        id="location" 
+        formControlName="location"
+        placeholder="Ex: Boulemane, Maroc"
+        required>
+      <div *ngIf="projectForm.get('location')?.invalid && projectForm.get('location')?.touched" class="error">
+        Veuillez entrer une localisation.
+      </div>
+    </div>
+
+    <!-- Type d'énergie -->
+    <div class="form-group">
+      <label for="energyType">Type d'énergie</label>
+      <select id="energyType" formControlName="energyType" required>
+        <option value="" disabled selected>Sélectionnez un type</option>
+        <option value="solaire">Solaire</option>
+        <option value="eolien">Éolien</option>
+        <option value="biomasse">Biomasse</option>
+        <option value="hydraulique">Hydraulique</option>
+        <option value="autre">Autre</option>
+      </select>
+      <div *ngIf="projectForm.get('energyType')?.invalid && projectForm.get('energyType')?.touched" class="error">
+        Veuillez choisir un type d'énergie.
+      </div>
+    </div>
+
+    <!-- Image du projet -->
+    <div class="form-group">
+      <label for="image">Image du projet</label>
+      <div class="upload-area" (click)="triggerFileInput()">
+        <div *ngIf="!selectedImage">
+          <span class="upload-icon">↑</span>
+          <p>Télécharger une image</p>
+        </div>
+        <div *ngIf="selectedImage" class="image-preview">
+          <img [src]="selectedImage" alt="Aperçu de l'image" />
+        </div>
+        <input 
+          type="file" 
+          #fileInput 
+          accept="image/*" 
+          (change)="onFileSelected($event)" 
+          style="display: none;">
+      </div>
+      <div *ngIf="imageError" class="error">
+        {{ imageError }}
+      </div>
+    </div>
+
+    <!-- Bouton Soumettre -->
+    <button type="submit" class="btn-submit" [disabled]="projectForm.invalid">
+      Soumettre le projet
+    </button>
+  </form>
+</div>

@@ -1,0 +1,53 @@
+<!-- src/app/projects-list/projects-list.html -->
+<div class="projects-container">
+  <!-- En-tête vert -->
+  <div class="header">
+    <h1>Projets disponibles</h1>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Rechercher un projet..."
+      [(ngModel)]="searchQuery"
+      (input)="filterProjects()" />
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <!-- Filtres -->
+  <div class="filters">
+    <button [class.active]="selectedFilter === ''" (click)="setFilter('')">Tous</button>
+    <button [class.active]="selectedFilter === 'solaire'" (click)="setFilter('solaire')">Solaire</button>
+    <button [class.active]="selectedFilter === 'eolien'" (click)="setFilter('eolien')">Éolien</button>
+    <button [class.active]="selectedFilter === 'hydraulique'" (click)="setFilter('hydraulique')">Hydraulique</button>
+  </div>
+
+  <!-- Liste des projets -->
+  <div class="projects-grid">
+    <div *ngFor="let project of filteredProjects" class="project-card">
+      <img [src]="project.image" [alt]="project.title" class="project-image" />
+
+      <!-- Badge type -->
+      <div class="type-badge">{{ project.type }}</div>
+
+      <div class="project-info">
+        <h3>{{ project.title }}</h3>
+        <p class="description">{{ project.description }}</p>
+        <p class="location">{{ project.location }}</p>
+
+        <!-- Barre de progression -->
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="project.progress"></div>
+        </div>
+
+        <div class="funding-stats">
+          <span class="percentage">{{ project.progress }}% financé</span>
+          <span class="amount">{{ project.raised | number }} MAD / {{ project.target | number }} MAD</span>
+        </div>
+
+        <button class="btn-view" (click)="viewProject(project)">Voir plus →</button>
+      </div>
+    </div>
+  </div>
+</div>

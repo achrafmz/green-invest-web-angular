@@ -1,0 +1,39 @@
+<div class="pending-projects-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Projets en attente</h1>
+    <p>{{ projects.length }} projets à valider</p>
+  </div>
+
+  <!-- Projects list -->
+  <div class="projects-list">
+    <div *ngFor="let project of projects" class="project-card">
+      <div class="project-header">
+        <h3>{{ project.title }}</h3>
+        <span class="type-badge">{{ project.type | titlecase }}</span>
+      </div>
+      <p class="author">Par {{ project.author }}</p>
+
+      <div class="project-details">
+        <div class="detail-item">
+          <label>Budget</label>
+          <span>{{ project.budget | number }} MAD</span>
+        </div>
+        <div class="detail-item">
+          <label>Soumis le</label>
+          <span>{{ project.submittedDate }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn-validate" (click)="validateProject(project)">
+          <span>✅</span> Valider
+        </button>
+        <button class="btn-reject" (click)="rejectProject(project)">
+          <span>❌</span> Refuser
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

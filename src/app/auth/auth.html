@@ -1,0 +1,49 @@
+<div class="auth-container">
+  <div class="logo">
+    <div class="leaf-icon">
+      <span class="material-icons">eco</span>
+    </div>
+    <h1>GreenInvest</h1>
+  </div>
+
+  <div class="tabs">
+    <button [class.active]="isLoginMode" (click)="switchToLogin()">Connexion</button>
+    <button [class.active]="!isLoginMode" (click)="switchToSignup()">Créer un compte</button>
+  </div>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+    
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <div class="input-with-icon">
+        <span class="material-icons icon">email</span>
+        <input type="email" id="email" formControlName="email" placeholder="Ex: fati@example.com" required>
+      </div>
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <div class="input-with-icon">
+        <span class="material-icons icon">lock</span>
+        <input type="password" id="password" formControlName="password" placeholder="••••••••" required>
+      </div>
+    </div>
+
+    <!-- Rôle -->
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="role">Rôle</label>
+      <div class="input-with-icon">
+        <span class="material-icons icon">person</span>
+        <select id="role" formControlName="role" required>
+          <option value="" disabled selected>Investisseur</option>
+          <option value="investisseur">Investisseur</option>
+          <option value="porteur">Porteur de projet</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-continue">Continuer</button>
+  </form>
+</div>
