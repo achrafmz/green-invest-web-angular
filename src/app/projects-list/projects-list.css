@@ -1,7 +1,66 @@
-/* src/app/projects-list/projects-list.css */
+/* === Nouveau Header avec avatar et déconnexion === */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+.welcome-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logout-btn {
+  background: white;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #fdf2f2;
+}
+
+/* === Ancien style conservé === */
 .projects-container {
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 20px auto;
   padding: 20px;
   background: #fafafa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -178,6 +237,17 @@
 
 /* Responsive */
 @media (max-width: 600px) {
+  .user-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+  }
+
   .projects-container {
     margin: 20px 10px;
     padding: 15px;
@@ -193,5 +263,9 @@
 
   .project-image {
     height: 180px;
+  }
+
+  .logout-btn {
+    align-self: flex-end;
   }
 }

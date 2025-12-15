@@ -1,13 +1,29 @@
+<!-- Header with Avatar & Logout -->
+<div class="dashboard-header">
+  <div class="user-info">
+    <div class="avatar">A</div>
+    <div>
+      <div class="greeting">Bonjour, {{ userName }}</div>
+      <div class="role">Porteur de projet</div>
+    </div>
+  </div>
+  <button class="btn-logout" (click)="logout()">
+    <span class="material-icons">logout</span>
+    Déconnexion
+  </button>
+</div>
+
 <div class="dashboard-container">
-  <!-- Header -->
-  <div class="header">
-    <h1>Bonjour Hajar</h1>
-    <p>Bienvenue sur votre tableau de bord</p>
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <h1>Votre tableau de bord</h1>
+    <p>Gérez vos projets énergétiques en un clin d'œil</p>
   </div>
 
   <!-- CTA Button -->
-  <button class="btn-create" (click)="createNewProject()">
-    <span>➕</span> Créer un nouveau projet
+  <button class="btn-create" (click)="goToCreateProject()">
+    <span class="material-icons">add</span>
+    Créer un nouveau projet
   </button>
 
   <!-- Mes projets -->
@@ -16,29 +32,47 @@
 
     <!-- Project Card 1 -->
     <div class="project-card">
-      <div class="project-title">
-        <span>Parc solaire communautaire</span>
+      <div class="project-header">
+        <div class="project-icon">
+          <span class="material-icons">solar_power</span>
+        </div>
+        <div class="project-meta">
+          <h3>Parc solaire communautaire</h3>
+          <p>Ouarzazate, Maroc</p>
+        </div>
         <span class="status status-funded">Financé</span>
       </div>
-      <div class="project-amount">1,000,000 MAD</div>
+      <div class="project-amount">1 000 000 MAD</div>
     </div>
 
     <!-- Project Card 2 -->
     <div class="project-card">
-      <div class="project-title">
-        <span>Installation biomasse locale</span>
+      <div class="project-header">
+        <div class="project-icon">
+          <span class="material-icons">biotech</span>
+        </div>
+        <div class="project-meta">
+          <h3>Installation biomasse locale</h3>
+          <p>Boulemane, Maroc</p>
+        </div>
         <span class="status status-validated">Validé</span>
       </div>
-      <div class="project-amount">750,000 MAD</div>
+      <div class="project-amount">750 000 MAD</div>
     </div>
 
     <!-- Project Card 3 -->
     <div class="project-card">
-      <div class="project-title">
-        <span>Mini-centrale hydraulique</span>
+      <div class="project-header">
+        <div class="project-icon">
+          <span class="material-icons">water_drop</span>
+        </div>
+        <div class="project-meta">
+          <h3>Mini-centrale hydraulique</h3>
+          <p>Marrakech, Maroc</p>
+        </div>
         <span class="status status-pending">En attente</span>
       </div>
-      <div class="project-amount">1,050,000 MAD</div>
+      <div class="project-amount">1 050 000 MAD</div>
     </div>
   </section>
 </div>

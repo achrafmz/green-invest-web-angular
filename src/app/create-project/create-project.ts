@@ -1,79 +1,67 @@
-// src/app/create-project/create-project.ts
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // ✅ ReactiveFormsModule doit être ici
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-project.html',
   styleUrls: ['./create-project.css']
 })
 export class CreateProject {
-  projectForm: FormGroup;
-  selectedImage: string | null = null;
-  imageError: string | null = null;
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
 
-  constructor(private fb: FormBuilder) {
-    this.projectForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      budget: [null, [Validators.required, Validators.min(1)]],
-      location: ['', Validators.required],
-      energyType: ['', Validators.required]
-    });
+  userName = 'Achraf';
+  showSuccess = false;
+
+  projectForm: FormGroup = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    budget: [null, [Validators.required, Validators.min(1)]],
+    location: ['', Validators.required],
+    energyType: ['', Validators.required]
+  });
+
+  constructor() {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        this.userName = userData.email.split('@')[0].charAt(0).toUpperCase() + userData.email.split('@')[0].slice(1);
+      } catch (e) {
+        console.warn('User data invalid');
+      }
+    }
   }
 
-  triggerFileInput() {
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    fileInput.click();
+  cancel() {
+    this.router.navigate(['/dashboard/porteur']);
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    // Validation du type de fichier
-    if (!file.type.startsWith('image/')) {
-      this.imageError = 'Veuillez sélectionner une image (jpg, png, gif, etc.)';
-      this.selectedImage = null;
-      return;
-    }
-
-    // Validation de la taille (ex: max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      this.imageError = 'L’image ne doit pas dépasser 5 Mo';
-      this.selectedImage = null;
-      return;
-    }
-
-    // Lire l’image pour l’afficher en aperçu
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.selectedImage = reader.result as string;
-      this.imageError = null;
-    };
-    reader.readAsDataURL(file);
-
-    // Ici tu peux aussi stocker le fichier pour l’envoyer plus tard
-    // this.projectForm.patchValue({ image: file });
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/auth']);
   }
 
   onSubmit() {
-    if (this.projectForm.valid) {
-      const formData = this.projectForm.value;
-      console.log('Projet soumis:', {
-        ...formData,
-        image: this.selectedImage ? 'Image sélectionnée' : 'Aucune image'
-      });
-
-      // Ici tu enverrais les données à ton backend
-      // ex: this.projectService.createProject(formData).subscribe(...)
-
-      alert('Projet soumis avec succès !');
-    } else {
-      console.log('Formulaire invalide');
+    if (this.projectForm.invalid) {
+      // Affiche les erreurs via les messages dans le template
+      return;
     }
+
+    // Simule la soumission
+    const projectData = this.projectForm.value;
+    console.log('Nouveau projet soumis :', projectData);
+
+    // Affiche popup de succès
+    this.showSuccess = true;
+
+    // Redirige vers le dashboard après 2 secondes
+    setTimeout(() => {
+      this.router.navigate(['/dashboard/porteur']);
+    }, 2000);
   }
 }

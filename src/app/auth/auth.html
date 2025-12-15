@@ -1,4 +1,5 @@
 <div class="auth-container">
+  <!-- Logo -->
   <div class="logo">
     <div class="leaf-icon">
       <span class="material-icons">eco</span>
@@ -6,11 +7,13 @@
     <h1>GreenInvest</h1>
   </div>
 
+  <!-- Toggle Tabs -->
   <div class="tabs">
     <button [class.active]="isLoginMode" (click)="switchToLogin()">Connexion</button>
     <button [class.active]="!isLoginMode" (click)="switchToSignup()">Créer un compte</button>
   </div>
 
+  <!-- Formulaire -->
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
     
     <!-- Email -->
@@ -18,7 +21,12 @@
       <label for="email">Email</label>
       <div class="input-with-icon">
         <span class="material-icons icon">email</span>
-        <input type="email" id="email" formControlName="email" placeholder="Ex: fati@example.com" required>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          placeholder="Ex: fati@example.com"
+          required>
       </div>
     </div>
 
@@ -27,7 +35,12 @@
       <label for="password">Mot de passe</label>
       <div class="input-with-icon">
         <span class="material-icons icon">lock</span>
-        <input type="password" id="password" formControlName="password" placeholder="••••••••" required>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          placeholder="••••••••"
+          required>
       </div>
     </div>
 
@@ -37,13 +50,43 @@
       <div class="input-with-icon">
         <span class="material-icons icon">person</span>
         <select id="role" formControlName="role" required>
-          <option value="" disabled selected>Investisseur</option>
+          <option value="" disabled selected hidden>Choisissez votre rôle</option>
           <option value="investisseur">Investisseur</option>
           <option value="porteur">Porteur de projet</option>
         </select>
       </div>
     </div>
 
-    <button type="submit" class="btn-continue">Continuer</button>
+    <!-- Bouton -->
+    <button 
+      type="submit" 
+      class="btn-continue"
+      [disabled]="authForm.invalid">
+      {{ isLoginMode ? 'Se connecter' : 'Créer mon compte' }}
+    </button>
   </form>
+
+  <!-- Toast Notification -->
+  <div 
+    *ngIf="showToast" 
+    class="toast"
+    [class.toast-error]="toastType === 'error'"
+    [class.toast-success]="toastType === 'success'">
+    <span class="toast-icon">
+      <span *ngIf="toastType === 'error'" class="material-icons">error</span>
+      <span *ngIf="toastType === 'success'" class="material-icons">check_circle</span>
+    </span>
+    <span class="toast-message">{{ toastMessage }}</span>
+  </div>
+  <!-- Loading Overlay -->
+<!-- Loading Overlay -->
+<div *ngIf="showLoading" class="loading-overlay">
+  <div class="loading-content">
+    <div class="leaf-icon">
+      <span class="material-icons">eco</span>
+    </div>
+    <p class="loading-text">{{ loadingText }}</p>
+    <div class="spinner"></div>
+  </div>
+</div>
 </div>

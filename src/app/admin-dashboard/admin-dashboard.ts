@@ -1,6 +1,6 @@
-// src/app/admin-dashboard/admin-dashboard.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // 👈 Ajoute Router
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -10,7 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./admin-dashboard.css']
 })
 export class AdminDashboard {
-  // ✅ Déclaration explicite des propriétés
+  // Injecte le router
+  constructor(private router: Router) {}
+
   stats = {
     pending: 12,
     approved: 48,
@@ -36,8 +38,8 @@ export class AdminDashboard {
     }
   ];
 
+  // ✅ Redirection vers /admin/pending
   viewPendingProjects() {
-    console.log('Affichage des projets en attente...');
-    alert('Redirection vers la liste des projets en attente...');
+    this.router.navigate(['/admin/pending']);
   }
 }

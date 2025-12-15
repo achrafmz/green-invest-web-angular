@@ -1,20 +1,22 @@
 // src/app/projects-list/projects-list.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // ✅ Obligatoire pour [(ngModel)]
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [CommonModule, FormsModule], // ✅ Les deux sont nécessaires
+  imports: [CommonModule, FormsModule],
   templateUrl: './projects-list.html',
   styleUrls: ['./projects-list.css']
 })
 export class ProjectsList {
+  userName = 'Anasse';
+
   searchQuery = '';
   selectedFilter = '';
 
-  // Données simulées (à remplacer par une API plus tard)
   projects = [
     {
       id: 1,
@@ -24,8 +26,8 @@ export class ProjectsList {
       type: 'solaire',
       image: 'https://via.placeholder.com/600x200/4CAF50/FFFFFF?text=Parc+Solaire',
       progress: 75,
-      raised: 75000,
-      target: 100000
+      raised: 750000,
+      target: 1000000
     },
     {
       id: 2,
@@ -35,8 +37,8 @@ export class ProjectsList {
       type: 'eolien',
       image: 'https://via.placeholder.com/600x200/2196F3/FFFFFF?text=Éolienne',
       progress: 45,
-      raised: 45000,
-      target: 100000
+      raised: 450000,
+      target: 1000000
     },
     {
       id: 3,
@@ -46,18 +48,28 @@ export class ProjectsList {
       type: 'hydraulique',
       image: 'https://via.placeholder.com/600x200/9C27B0/FFFFFF?text=Hydraulique',
       progress: 30,
-      raised: 30000,
-      target: 100000
+      raised: 300000,
+      target: 1000000
     }
   ];
 
-  // Commence par afficher tous les projets
   filteredProjects = [...this.projects];
+
+  constructor(private router: Router) {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        const name = userData.email.split('@')[0];
+        this.userName = name.charAt(0).toUpperCase() + name.slice(1);
+      } catch (e) {
+        console.warn('Données utilisateur invalides');
+      }
+    }
+  }
 
   filterProjects() {
     let result = this.projects;
-
-    // Filtre par recherche
     if (this.searchQuery.trim()) {
       const q = this.searchQuery.toLowerCase();
       result = result.filter(p =>
@@ -66,12 +78,9 @@ export class ProjectsList {
         p.location.toLowerCase().includes(q)
       );
     }
-
-    // Filtre par type
     if (this.selectedFilter) {
       result = result.filter(p => p.type === this.selectedFilter);
     }
-
     this.filteredProjects = result;
   }
 
@@ -81,7 +90,11 @@ export class ProjectsList {
   }
 
   viewProject(project: any) {
-    console.log('Voir détails du projet:', project.title);
-    // Plus tard : this.router.navigate(['/project', project.id]);
+    this.router.navigate(['/project', project.id]);
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/auth']);
   }
 }

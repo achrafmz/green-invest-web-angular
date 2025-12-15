@@ -1,19 +1,34 @@
+<!-- Header identique au dashboard -->
+<div class="dashboard-header">
+  <div class="user-info">
+    <div class="avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+    <div>
+      <div class="greeting">Bonjour, {{ userName }}</div>
+      <div class="role">Porteur de projet</div>
+    </div>
+  </div>
+  <button class="btn-logout" (click)="logout()">
+    <span class="material-icons">logout</span>
+    Déconnexion
+  </button>
+</div>
+
 <div class="create-project-container">
   <h1>Créer un projet</h1>
 
   <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="project-form">
 
-    <!-- Titre du projet -->
+    <!-- Titre -->
     <div class="form-group">
       <label for="title">Titre du projet</label>
       <input 
         type="text" 
         id="title" 
         formControlName="title"
-        placeholder="Ex: Parc éolien communautaire"
+        placeholder="Ex: Parc solaire communautaire"
         required>
       <div *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched" class="error">
-        Veuillez entrer un titre.
+        Ce champ est requis.
       </div>
     </div>
 
@@ -31,19 +46,16 @@
       </div>
     </div>
 
-    <!-- Budget nécessaire -->
+    <!-- Budget -->
     <div class="form-group">
       <label for="budget">Budget nécessaire (MAD)</label>
-      <div class="input-with-icon">
-        <span class="icon">$</span>
-        <input 
-          type="number" 
-          id="budget" 
-          formControlName="budget"
-          placeholder="100000"
-          min="1"
-          required>
-      </div>
+      <input 
+        type="number" 
+        id="budget" 
+        formControlName="budget"
+        placeholder="100000"
+        min="1"
+        required>
       <div *ngIf="projectForm.get('budget')?.invalid && projectForm.get('budget')?.touched" class="error">
         Veuillez entrer un budget valide.
       </div>
@@ -59,7 +71,7 @@
         placeholder="Ex: Boulemane, Maroc"
         required>
       <div *ngIf="projectForm.get('location')?.invalid && projectForm.get('location')?.touched" class="error">
-        Veuillez entrer une localisation.
+        La localisation est requise.
       </div>
     </div>
 
@@ -67,44 +79,32 @@
     <div class="form-group">
       <label for="energyType">Type d'énergie</label>
       <select id="energyType" formControlName="energyType" required>
-        <option value="" disabled selected>Sélectionnez un type</option>
+        <option value="" disabled selected>Choisissez un type</option>
         <option value="solaire">Solaire</option>
-        <option value="eolien">Éolien</option>
+        <option value="éolien">Éolien</option>
         <option value="biomasse">Biomasse</option>
         <option value="hydraulique">Hydraulique</option>
-        <option value="autre">Autre</option>
       </select>
       <div *ngIf="projectForm.get('energyType')?.invalid && projectForm.get('energyType')?.touched" class="error">
-        Veuillez choisir un type d'énergie.
+        Veuillez choisir un type.
       </div>
     </div>
 
-    <!-- Image du projet -->
-    <div class="form-group">
-      <label for="image">Image du projet</label>
-      <div class="upload-area" (click)="triggerFileInput()">
-        <div *ngIf="!selectedImage">
-          <span class="upload-icon">↑</span>
-          <p>Télécharger une image</p>
-        </div>
-        <div *ngIf="selectedImage" class="image-preview">
-          <img [src]="selectedImage" alt="Aperçu de l'image" />
-        </div>
-        <input 
-          type="file" 
-          #fileInput 
-          accept="image/*" 
-          (change)="onFileSelected($event)" 
-          style="display: none;">
-      </div>
-      <div *ngIf="imageError" class="error">
-        {{ imageError }}
-      </div>
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Annuler</button>
+      <button type="submit" class="btn-submit" [disabled]="projectForm.invalid">
+        Soumettre le projet
+      </button>
     </div>
-
-    <!-- Bouton Soumettre -->
-    <button type="submit" class="btn-submit" [disabled]="projectForm.invalid">
-      Soumettre le projet
-    </button>
   </form>
+
+  <!-- Popup de succès -->
+  <div *ngIf="showSuccess" class="success-popup">
+    <div class="popup-content">
+      <div class="check-icon">✓</div>
+      <h3>Projet soumis avec succès !</h3>
+      <p>Votre projet est en attente de validation.</p>
+    </div>
+  </div>
 </div>
